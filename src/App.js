@@ -137,8 +137,11 @@ function App() {
                                         {user.editMode === true ? <input onChange={userValueChange} 
                                         value={editedValue}/> : user.name}
                                     </td>
-                                    <td className='canBeEdited'>{user.Lname}</td>
                                     
+                                    <td>
+                                        {user.editMode === true ? <input onChange={userValueChange} 
+                                        value={editedValue}/> : user.Lname}
+                                    </td>
                                     <td>
                                     <button id='delete-button' 
                                     onClick={() => removeClick(user.id,'users')}>
@@ -177,8 +180,15 @@ function App() {
                                     return(
                                         <tr key={index}>
                                             <td>{items.id}</td>
-                                            <td className='edit-button'>{items.product}</td>
-                                            <td className='edit-button'>{items.price}</td>
+                                            <td>
+                                                {items.editMode === true ? <input onChange={userValueChange} 
+                                                value={editedValue}/> : items.product}
+                                            </td>
+                                    
+                                             <td>
+                                                {items.editMode === true ? <input onChange={userValueChange} 
+                                                value={editedValue}/> : items.price}
+                                            </td>
                                            
                                             <td>
                                                 <button id='delete-button' onClick={() => removeClick(items.id,'items')}>
