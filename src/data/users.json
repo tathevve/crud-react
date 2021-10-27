@@ -1,9 +1,9 @@
 [
-    {"id":1,"name": "A","Lname":"B"},
-    {"id":2,"name": "C","Lname":"D"},
-    {"id":3,"name": "E","Lname":"F"},
-    {"id":4,"name": "G","Lname":"H"},
-    {"id":5,"name": "I","Lname":"J"},
-    {"id":6,"name": "K","Lname":"L"},
-    { "id":7,"name": "M","Lname":"T"}
+    {"id":1,"name": "A","Lname":"B", "editMode":false},
+    {"id":2,"name": "C","Lname":"D", "editMode":false},
+    {"id":3,"name": "E","Lname":"F", "editMode":false},
+    {"id":4,"name": "G","Lname":"H", "editMode":false},
+    {"id":5,"name": "I","Lname":"J", "editMode":false},
+    {"id":6,"name": "K","Lname":"L", "editMode":false},
+    { "id":7,"name": "M","Lname":"T", "editMode":false}
 ]

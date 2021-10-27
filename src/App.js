@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Buttons from './components/Buttons.js';
 import dataJSON from './data/users.json';
 import dataItemsJSON from './data/items.json';
+import Add from './Add.js';
 
 
 
@@ -9,17 +10,31 @@ function App() {
 
     const [usersButtonClicked,setUsersButtonClicked] = useState(false);
     const [itemsButtonClicked,setItemsButtonClicked] = useState(false);
-    const [categoryButtonClicked,setCategoryButtonClicked] = useState(false);
+    // const [categoryButtonClicked,setCategoryButtonClicked] = useState(false);
     const [usersList,setUsersList] = useState(dataJSON);
     const [itemsList,setItemsList] = useState(dataItemsJSON);
    
+    const [newUser, setNewUser] = useState([]);
+    const [editedValue, setEditedValue]=useState('');
+
+    const NewUser = newUser => {
+        if (!newUser.text || /^\s*$/.test(newUser.text)) {
+          return;
+        }
+    
+        const newUsers = [newUser, ...newUser];
+    
+        setNewUser(newUsers);
+        console.log(...newUser);
+      };
+
    
 
     const usersClick = () => {setUsersButtonClicked(true); 
         setItemsButtonClicked(false)};
     const itemsClick = () =>{setUsersButtonClicked(false); 
         setItemsButtonClicked(true)};
-    const categoryClick = () => setCategoryButtonClicked(true);
+    // const categoryClick = () => setCategoryButtonClicked(true);
 
    
     const removeClick = (id,type) => {
@@ -35,97 +50,109 @@ function App() {
                 
        
     }
-    
-    const [edit, setEdit] = useState({
-        id: null,
-        value: ''
-      });
 
-      const [input, setInput] = useState(edit ? edit.value : '');
-      const inputRef = useRef(null);
-
-      const submitUpdate = value => {
-        updateClick(edit.id, value);
-        setEdit({
-          id: null,
-          value: ''
-        });
-      };
-    
-    //   if (edit.id) {
-    //     return {edit={edit} onSubmit={submitUpdate} };
-    //   }
-
-    const handleChange = e => {
-        <input
-            placeholder='Update your item'
-            value={input}
-            onChange={handleChange}
-            name='text'
-            ref={inputRef}
-            className='item-input edit'
-        />
-        setInput(e.target.value);
-      };
-
-    const updateClick = (prId, newValue) => {
+    const editedValueSubmit = (id) => {
+        const updatedData = usersList.map((item) => {
+        if(item.id === id) {
+        return {
+        ...item,
+        name:editedValue,
+        }
+        }else{
+        return item
+        }
+        })
         
+        setUsersList(updatedData)
+        }
 
-        // if (!newValue.text || /^\s*$/.test(newValue.innerText)) {
-        // return;
-        // }
+    const userValueChange = (event) => {
+        setEditedValue(event.target.value)
+    }
 
+    // const updateClick = (e) => {
+    //     e=e.target;
+        
+    //    if(e.innerText === 'Edit') {
+    //        e.innerText = 'Save';
+    //    } else {
+    //        e.innerText = 'Edit';
+    //    }
+
+    //     // item.editMode === true ? <p> item.name
+    //     // </p> : <input onChange={userValueChange } 
+    //     //         value={editedValue} 
+    //     //         onSubmit={editedValueSubmit()}/>
+       
+    // }  
     
-        setUsersList(prev => prev.map(item => (item.id === prId ? newValue : item)));
-      };
+    
+    const updateClick = (user) => {
+        const updatedData = usersList.map((item) => {
+        if(item.id === user.id) {
+            return {
+            ...item,
+            editMode:true,
+            }
+        }else{
+            return {
+                ...item,
+                editMode:false
+            }
+        }
+        })
+    }
+    
+    
 
+   
     return (
         <div className="pro">
             <h1>Project</h1>
             <Buttons 
                 usersClickHandler={usersClick} 
                 itemsClickHandler={itemsClick}
-                categoriesClickHandler={categoryClick} 
+                // categoriesClickHandler={categoryClick} 
                
             />
              
             {usersButtonClicked  && 
-            
-               
                 <div   div className='table-container'>
                   <table>
-                    <thead>
+                  <thead>
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
                             <th>Surname</th>
                             
                         </tr>
-                    </thead>
-                    <tbody>
+                  
+                        </thead>
+                        <tbody>
                         {usersList.map((user, index) => {
                             return(
                                 <tr key={index}>
-                                    <td>{user.id}</td>
-                                    <td className='edit-button'>{user.name}</td>
-                                    <td className='edit-button'>{user.Lname}</td>
+                                    <td >{user.id}</td>
+                                    <td>
+                                        {user.editMode === true ? <input onChange={userValueChange} 
+                                        value={editedValue}/> : user.name}
+                                    </td>
+                                    <td className='canBeEdited'>{user.Lname}</td>
                                     
                                     <td>
                                     <button id='delete-button' 
                                     onClick={() => removeClick(user.id,'users')}>
                                         Delete
                                     </button>
-                                    <button 
-                                     onClick={() => updateClick({ id: user.id, value: user.text })}>
-                                     
-          
+                                    <button id="btn-edit"
+                                     onClick={() => updateClick(user) }>
                                         Edit
                                     </button>
                                     </td>
                                 </tr>
                             )
                         })}
-                    </tbody>
+                  </tbody>
                     </table>
                 </div>
 
@@ -172,7 +199,12 @@ function App() {
 
             }
                 
-            
+            <div className='app-content'>
+                <div className='create-smth'>
+                    <Add onSubmit={NewUser} />
+                </div>
+                
+            </div>
         </div>
     );
 }
