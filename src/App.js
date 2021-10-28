@@ -5,6 +5,20 @@ import dataItemsJSON from './data/items.json';
 import Add from './Add.js';
 
 
+// const updateClick = (e) => {
+    //     e=e.target;
+        
+    //    if(e.innerText === 'Edit') {
+    //        e.innerText = 'Save';
+    //    } else {
+    //        e.innerText = 'Edit';
+    //    }
+
+   
+       
+    // }  
+    
+
 
 function App() {
 
@@ -15,7 +29,7 @@ function App() {
     const [itemsList,setItemsList] = useState(dataItemsJSON);
    
     const [newUser, setNewUser] = useState([]);
-    const [editedValue, setEditedValue]=useState('');
+   
 
     const NewUser = newUser => {
         if (!newUser.text || /^\s*$/.test(newUser.text)) {
@@ -51,56 +65,44 @@ function App() {
        
     }
 
+    const [editedValue, setEditedValue]=useState('');
+
     const editedValueSubmit = (id) => {
         const updatedData = usersList.map((item) => {
-        if(item.id === id) {
-        return {
-        ...item,
-        name:editedValue,
-        }
-        }else{
-        return item
-        }
+            if(item.id === id) {
+                return {
+                    ...item,
+                    name:editedValue,
+                }
+            }else{
+                return item
+            }
         })
         
         setUsersList(updatedData)
-        }
+    }
 
     const userValueChange = (event) => {
         setEditedValue(event.target.value)
     }
 
-    // const updateClick = (e) => {
-    //     e=e.target;
-        
-    //    if(e.innerText === 'Edit') {
-    //        e.innerText = 'Save';
-    //    } else {
-    //        e.innerText = 'Edit';
-    //    }
-
-    //     // item.editMode === true ? <p> item.name
-    //     // </p> : <input onChange={userValueChange } 
-    //     //         value={editedValue} 
-    //     //         onSubmit={editedValueSubmit()}/>
-       
-    // }  
     
     
     const updateClick = (user) => {
         const updatedData = usersList.map((item) => {
-        if(item.id === user.id) {
-            return {
-            ...item,
-            editMode:true,
-            }
-        }else{
-            return {
+            if(item.id === user.id) {
+                return {
                 ...item,
-                editMode:false
+                editMode:true,
+                }
+            }else{
+                return {
+                    ...item,
+                    editMode:false
+                }
             }
-        }
         })
+        
     }
     
     
