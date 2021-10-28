@@ -102,6 +102,8 @@ function App() {
                 }
             }
         })
+
+       
         
     }
     
@@ -137,7 +139,7 @@ function App() {
                                     <td >{user.id}</td>
                                     <td>
                                         {user.editMode === true ? <input onChange={userValueChange} 
-                                        value={editedValue}/> : user.name}
+                                        value={editedValueSubmit(editedValue)}/> : user.name}
                                     </td>
                                     
                                     <td>
@@ -146,7 +148,8 @@ function App() {
                                     </td>
                                     <td>
                                     <button id='delete-button' 
-                                    onClick={() => removeClick(user.id,'users')}>
+                                    onClick={() => removeClick(user.id,'users')}
+                                    onSubmit={()=>editedValueSubmit(user.id)}>
                                         Delete
                                     </button>
                                     <button id="btn-edit"
