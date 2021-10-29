@@ -32,9 +32,9 @@ function App() {
    
 
     const NewUser = newUser => {
-        if (!newUser.text || /^\s*$/.test(newUser.text)) {
-          return;
-        }
+        // if (!newUser.text || /^\s*$/.test(newUser.text)) {
+        //   return;
+        // }
     
         const newUsers = [newUser, ...newUser];
     
@@ -133,13 +133,13 @@ function App() {
                   
                         </thead>
                         <tbody>
-                        {usersList.map((user, index) => {
+                        {usersList.map((user) => {
                             return(
-                                <tr key={index}>
+                                <tr key={user.id}>
                                     <td >{user.id}</td>
                                     <td>
                                         {user.editMode === true ? <input onChange={userValueChange} 
-                                        value={editedValueSubmit(editedValue)}/> : user.name}
+                                        value={(editedValue)}/> : user.name}
                                     </td>
                                     
                                     <td>
@@ -148,8 +148,7 @@ function App() {
                                     </td>
                                     <td>
                                     <button id='delete-button' 
-                                    onClick={() => removeClick(user.id,'users')}
-                                    onSubmit={()=>editedValueSubmit(user.id)}>
+                                    onClick={() => removeClick(user.id,'users')}>
                                         Delete
                                     </button>
                                     <button id="btn-edit"
@@ -200,7 +199,7 @@ function App() {
                                                     Delete
                                                 </button>
                                                 <button 
-                                                 onClick={() => updateClick({ id: items.id, value: items.text })}>
+                                                 onClick={() => updateClick(items)}>
                                                     Edit
                                                 </button>
                                             </td>
