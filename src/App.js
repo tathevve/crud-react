@@ -22,12 +22,13 @@ function App() {
         setItemsButtonClicked(false)
     };
 
-
-
     const itemsClick = () => {
         setUsersButtonClicked(false);
         setItemsButtonClicked(true)
     };
+
+
+    
 
     const removeHandler = (id, type) => {
 
@@ -129,23 +130,41 @@ function App() {
         
     }
 
-    const handleAddFormChange = (event) => {
-       
+    const handleAddFormChange = (event,type) => {
+
+        if(type === 'users') {
             const newData = {
                 id: usersList[usersList.length - 1].id + 1,
                 [event.target.name]: event.target.value
             }
     
             setNewUserData({ ...newUserData, ...newData });
-        
+        }
+        else {
+            const newData = {
+                id: itemsList[itemsList.length - 1].id + 1,
+                [event.target.name]: event.target.value
+            }
+    
+            setnewItemsData({ ...newItemsData, ...newData });
+        }
     };
 
 
-    const handleAddFormSubmt = (event) => {
-        event.preventDefault();
+    const handleAddFormSubmt = (event,type) => {
 
-        setUsersList([...usersList, newUserData])
-        setNewUserData(null);
+       
+        if(type === 'users') {
+            event.preventDefault();
+            setUsersList([...usersList, newUserData])
+            setNewUserData(null);
+        }
+        else {
+            event.preventDefault();
+            setItemsList([...itemsList, newItemsData])
+            setnewItemsData(null);
+        }
+        
     }
 
 
@@ -160,7 +179,7 @@ function App() {
             />
 
             {usersButtonClicked &&
-                <div div className='table-container'>
+             <div div className='users-container'>
                     <table>
                         <thead>
                             <tr>
@@ -203,11 +222,41 @@ function App() {
                             })}
                         </tbody>
                     </table>
+                    <div className='user-content'>
+                        <div className='create-smth'>
+                            <h2>Add a user</h2>
+                            <form className='add-form' onSubmit={(event) => handleAddFormSubmt(event,'users')}>
+                                <input
+                                    type="text"
+                                    placeholder='Enter a name'
+                                    name="Fname"
+                                    value={newUserData?.Fname ? newUserData?.Fname : ''}
+                                    onChange={(event) => handleAddFormChange(event,'users')}
+                                    required="required"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder='Enter a last name'
+                                    name="Lname"
+                                    required="required"
+                                    value={newUserData?.Lname ? newUserData?.Lname : ''}
+                                    onChange={(event) => handleAddFormChange(event,'users')}
+                                />
+
+                                <button type="submit">
+                                    Add
+                                </button>
+
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
+                
             }
 
             {itemsButtonClicked && 
-                        
+                <div className="items-container">       
                         <table>
                             <thead>
                                 <tr>
@@ -250,38 +299,42 @@ function App() {
                                 })}
                             </tbody>
                             </table>
+                            <div className='items-content'>
+                        <div className='create-smth'>
+                            
+                            <h2>Add an item</h2>
+                            <form className='add-form' onSubmit={(event) => handleAddFormSubmt(event,'items')}>
+                                <input
+                                    type="text"
+                                    placeholder='Enter product'
+                                    name="product"
+                                    value={newItemsData?.product ? newItemsData?.product : ''}
+                                    onChange={(event) => handleAddFormChange(event,'items')}
+                                    required="required"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder='Enter price'
+                                    name="price"
+                                    required="required"
+                                    value={newItemsData?.price ? newItemsData?.price : ''}
+                                    onChange={(event) => handleAddFormChange(event,'items')}
+                                />
+
+                                <button type="submit">
+                                    Add
+                                </button>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                            
 
             }  
 
-            <div className='app-content'>
-                <div className='create-smth'>
-                    <h2>Add a user</h2>
-                    <form className='add-form' onSubmit={handleAddFormSubmt}>
-                        <input
-                            type="text"
-                            placeholder='Enter a name'
-                            name="Fname"
-                            value={newUserData?.Fname ? newUserData?.Fname : ''}
-                            onChange={handleAddFormChange}
-                            required="required"
-                        />
-                        <input
-                            type="text"
-                            placeholder='Enter a last name'
-                            name="Lname"
-                            required="required"
-                            value={newUserData?.Lname ? newUserData?.Lname : ''}
-                            onChange={handleAddFormChange}
-                        />
-
-                        <button type="submit">
-                            Add
-                        </button>
-
-                    </form>
-                </div>
-
-            </div>
+            
         </div>
     );
 };
