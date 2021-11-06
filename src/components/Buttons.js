@@ -14,9 +14,9 @@ function Buttons({usersClickHandler, itemsClickHandler, categoriesClickHandler})
             <button onClick={() =>  itemsClickHandler() }>
                 Items
             </button>
-            <button onClick={() =>  categoriesClickHandler() }>
+            {/* <button onClick={() =>  categoriesClickHandler() }>
                 Category
-            </button>
+            </button> */}
             
         </div>
         
